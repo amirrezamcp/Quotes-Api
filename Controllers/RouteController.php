@@ -1,6 +1,8 @@
 <?php
 namespace Controllers;
-class route {
+use Traits\SanitizerTrait;
+class RouteController {
+    use SanitizerTrait;
     private $routes = [];
     public function add($url, $method, $controller, $action) {
         $urlPattern = preg_replace_callback('/\{([a-zA-Z_][a-zA-Z0-9_-]*)\}/', function ($matches) {
@@ -14,6 +16,8 @@ class route {
         ];
     }
     public function match($requestUrl, $requestMethod) {
+        $requestUrl = $this->sanitizeInput($requestUrl);
+        $requestMethod = $this->sanitizeInput($requestMethod);
         foreach($this->routes as $route) {
             if($route['method'] === $requestMethod) {
                 if(preg_match($route['urlPattern'], $requestUrl, $matches)) {
@@ -29,6 +33,10 @@ class route {
         return false;
     }
     private function callControllerAction($controller, $action, $params) {
+        $controller = $this->sanitizeInput($controller);
+        $action = $this->sanitizeInput($action);
+        $params = $this->sanitizeInput($params);
+
         $controllerInstance = new $controller();
         if(method_exists($controllerInstance, $action)) {
             call_user_func_array([$controllerInstance, $action], array($params));
