@@ -25,6 +25,7 @@ class route {
                 }
             }
         }
+        $this->invalidRequest($requestUrl);
         return false;
     }
     private function callControllerAction($controller, $action, $params) {
@@ -34,5 +35,15 @@ class route {
         }else{
             echo "Internal server Error";
         }
+    }
+    private function invalidRequest($route) {
+        $response = [
+            'error' => 'Invalid Route, 404 not found.',
+            'error_code' => '404',
+            'requested_route' => $route
+        ];
+        http_response_code(404);
+        $response = json_encode($response);
+        echo $response;
     }
 }
