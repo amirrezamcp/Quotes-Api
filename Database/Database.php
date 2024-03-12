@@ -9,7 +9,7 @@ class Database {
     private $host = 'localhost';
     private $username = 'root';
     private $password = '';
-    private $database = 'ooplogin_dbs';
+    private $database = 'quotes_api_dbs';
     private $connection;
 
     public function __construct() {
