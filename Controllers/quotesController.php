@@ -55,4 +55,39 @@ class QuotesController extends Database{
         http_response_code(200);
         echo json_encode($response);
     }
+
+    /**
+     * Inserting data using the post method
+     */
+    public function store() {
+        $data = $this->sanitizeInput($_POST);
+        if(array_key_exists('quote', $data) || array_key_exists('author', $data)) {
+            $user_id = 1;
+            $sql = "INSERT INTO $this->table (user_id, quote, author) VALUES (?, ?, ?)";
+            $params = [
+                $user_id,
+                $data['quote'],
+                $data['author']
+            ];
+            $stmt = $this->executeStatement($sql, $params);
+            if($stmt->affected_rows == 1) {
+                $response = [
+                    'status' => 'ok',
+                    'quote_id' => $stmt->insert_id,
+                    'message' => 'Quote added successfully'
+                ];
+            }else{
+                $response = [
+                    'status' => 'error',
+                    'message' => 'can not insert new row'
+                ];
+            } 
+        }else{
+            $response = [
+                'status' => 'error',
+                'message' => 'invalid input'
+            ];
+        }
+        echo json_encode($response);
+    }
 }
