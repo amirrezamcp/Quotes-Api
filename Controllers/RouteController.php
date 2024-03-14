@@ -3,16 +3,15 @@ namespace Controllers;
 use Traits\SanitizerTrait;
 class RouteController {
     use SanitizerTrait;
-
     /**
-     * Properties $routes         It is an array to store route information.
+     * It is an array to store route information.
      *
-     * @var   array   $routes
+     * @var array
      */
     private $routes = [];
 
     /**
-     * function add                   Add route and store in $routes array
+     * Add route and store in $routes array
      *
      * @param   [type]   $url         This parameter indicates the URL address of the desired path
      *                                  that should be connected to the controller and the corresponding
@@ -41,10 +40,10 @@ class RouteController {
     }
 
     /**
-     * function match                   Receives the request 
-     *                                  Checks if $requestUrl and $requestMethod exist in $route 
-     *                                  If present, it is passed to the callControllerAction method 
-     *                                  If not, a 404 Not Found error.
+     * Receives the request 
+     *      Checks if $requestUrl and $requestMethod exist in $route 
+     *      If present, it is passed to the callControllerAction method 
+     *      If not, a 404 Not Found error.
      *
      * @param   [type]  $requestUrl     This variable in the PHP code contains the path (URL)
      *                                  of the current request, which is extracted from the
@@ -78,9 +77,9 @@ class RouteController {
     }
     
     /**
-     * function callControllerAction    If the desired method exists in the controller,
-     *                                  it calls it using "call_user_func_array" with the required parameters. Otherwise,
-     *                                  it will display "Internal Server Error" message.
+     * If the desired method exists in the controller,
+     *      it calls it using "call_user_func_array" with the required parameters. Otherwise,
+     *      it will display "Internal Server Error" message.
      *
      * @param   [type]  $params         $params == $matches
      *                                  $params is the same as $matches
@@ -99,11 +98,11 @@ class RouteController {
     }
 
     /**
-     * function invalidRequest          This function sends an error message for invalid requests.
-     *                                  When a request is made with a path that does not exist, this function returns
-     *                                  a response with a 404 "Not Found" status code.
-     *                                  It then creates an array with error information including the error message, error code,and request path.
-     *                                  This array is then converted to JSON and returned as the response.
+     * This function sends an error message for invalid requests.
+     *      When a request is made with a path that does not exist, this function returns
+     *      a response with a 404 "Not Found" status code.
+     *      It then creates an array with error information including the error message, error code,and request path.
+     *      This array is then converted to JSON and returned as the response.
      *
      * @param   [type]  $route          is the route that was sent for the invalid request. This variable holds
      *                                  the value of the requested path so that it can be used in an error
