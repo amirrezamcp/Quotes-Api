@@ -15,3 +15,6 @@ $routes->add('/quotes', 'POST', 'Controllers\QuotesController', 'stores');
 
 // PUT Quotes routes
 $routes->add('/quotes/{id}', 'PUT', 'Controllers\QuotesController', 'updateQuotes');
+
+// DELETE Quotes routes
+$routes->add('/quotes/{id}', 'DELETE', 'Controllers\QuotesController', 'deleteQuotes');

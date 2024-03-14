@@ -123,4 +123,28 @@ class QuotesController extends Database{
         }
         echo json_encode($response);
     }
+
+    /**
+     * Delete data using the DELETE method
+     */
+    public function deleteQuotes($id) {
+        $id = $this->sanitizeInput($id['id']);
+        $sql = "DELETE FROM $this->table WHERE id =?";
+        $params = [
+            $id
+        ];
+        $stmt = $this->executeStatement($sql, $params);
+        if($stmt->affected_rows == 1) {
+            $response = [
+                'status' => 'Ok',
+                'message' => 'record deleted successfully'
+            ];
+        }else{
+            $response = [
+                'status' => 'error',
+                'message' => 'can not delete the record'
+            ];
+        }
+        echo json_encode($response);
+    }
 }
