@@ -12,3 +12,6 @@ $routes->add('/quotes/{id}', 'GET', 'Controllers\QuotesController', 'getQuotes')
 
 // POST Quotes routes
 $routes->add('/quotes', 'POST', 'Controllers\QuotesController', 'stores');
+
+// PUT Quotes routes
+$routes->add('/quotes/{id}', 'PUT', 'Controllers\QuotesController', 'updateQuotes');

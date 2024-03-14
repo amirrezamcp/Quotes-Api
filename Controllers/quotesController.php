@@ -90,4 +90,37 @@ class QuotesController extends Database{
         }
         echo json_encode($response);
     }
+
+    /**
+     * Update data using the PUT method
+     */
+    public function updateQuotes($id) {
+        $id = $this->sanitizeInput($id['id']);
+        $put_data = file_get_contents("php://input");
+        parse_str($put_data, $data);
+        $data = $this->sanitizeInput($data);
+        $sql = "UPDATE $this->table SET ";
+        $update = [];
+        foreach($data as $key => $value) {
+            $update [] = "$key = '$value'";
+        }
+        $sql .= implode(',', $update);
+        $sql .= ", updated_at = NOW() WHERE id = ?";
+        $params = [
+            $id
+        ];
+        $stmt = $this->executeStatement($sql, $params);
+        if($stmt->affected_rows == 1) {
+            $response = [
+                'status' => 'Ok',
+                'message' => 'record updated successfully'
+            ];
+        }else{
+            $response = [
+                'status' => 'error',
+                'message' => 'can not update the row'
+            ];
+        }
+        echo json_encode($response);
+    }
 }
