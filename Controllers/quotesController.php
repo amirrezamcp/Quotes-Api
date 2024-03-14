@@ -1,13 +1,19 @@
 <?php
 namespace Controllers;
 use Database\Database;
+use Traits\SanitizerTrait;
 class QuotesController extends Database{
+    use SanitizerTrait;
+
+    // Database table name
     protected $table = 'quotes';
-    public function index($params){
+    
+/**
+ * Select all data using the get method
+ */
+    public function index(){
         $sql = "SELECT * FROM $this->table";
         $stmt = $this->executeStatement($sql);
-
-        // $stmt->fetch();
         $rows = $stmt->get_result();
         if($rows->num_rows <= 0) {
             $response = [
@@ -24,7 +30,14 @@ class QuotesController extends Database{
         echo json_encode($data);
     }
 
+    /**
+     * Data with condition id Select using the get method
+     * 
+     * @param   [type]  $params     $params['id' => '$id'];
+     *                              $id is the id of the condition to be selected in the database
+     */
     public function getQuotes($params) {
+        var_dump($params);
         $id = $params['id'];
         $sql = "SELECT * FROM $this->table WHERE id = ?";
         $sql_params = [$id];
@@ -41,7 +54,5 @@ class QuotesController extends Database{
         }
         http_response_code(200);
         echo json_encode($response);
-
-
     }
 }
