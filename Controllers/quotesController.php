@@ -37,7 +37,6 @@ class QuotesController extends Database{
      *                              $id is the id of the condition to be selected in the database
      */
     public function getQuotes($params) {
-        var_dump($params);
         $id = $params['id'];
         $sql = "SELECT * FROM $this->table WHERE id = ?";
         $sql_params = [$id];
@@ -144,6 +143,34 @@ class QuotesController extends Database{
                 'status' => 'error',
                 'message' => 'can not delete the record'
             ];
+        }
+        echo json_encode($response);
+    }
+
+    /**
+     * It takes an author as input and retrieves that author's citations from the database.
+     *
+     * @param   [type]  $author  Name of the author
+     */
+    public function QuotesByAuthor($author) {
+        $author = $this->sanitizeInput($author['author']);
+        $author = str_replace('%20', ' ', $author);
+        $sql = "SELECT * FROM $this->table WHERE author = ?";
+        $params = [
+            $author
+        ];
+        $stmt = $this->executeStatement($sql, $params);
+        $rows = $stmt->get_result();
+        if($rows->num_rows <= 0) {
+            $response = [
+                "status" => "error",
+                "message" => "no record exists in database"
+            ];
+        }else{
+            $data = [];
+            while($row = $rows->fetch_assoc()) {
+                $response[] = $row;
+            }
         }
         echo json_encode($response);
     }
