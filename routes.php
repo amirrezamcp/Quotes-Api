@@ -20,4 +20,4 @@ $routes->add('/quotes/{id}', 'PUT', 'Controllers\QuotesController', 'updateQuote
 $routes->add('/quotes/{id}', 'DELETE', 'Controllers\QuotesController', 'deleteQuotes');
 
 // Filter by author
-$routes->add('/quotes/author/{author}', 'GET', 'Controllers\QuotesController', 'QuotesByAuthor');
+$routes->add('/quotes/author/{author}', 'GET', 'Controllers\QuotesController', 'quotesByAuthor');
