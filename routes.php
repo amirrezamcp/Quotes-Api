@@ -21,3 +21,6 @@ $routes->add('/quotes/{id}', 'DELETE', 'Controllers\QuotesController', 'deleteQu
 
 // Filter by author
 $routes->add('/quotes/author/{author}', 'GET', 'Controllers\QuotesController', 'quotesByAuthor');
+
+// Authentication using tokens
+$routes->add('/quotes/user/{id}', 'GET', 'Controllers\QuotesController', 'getQuotesByUserId');

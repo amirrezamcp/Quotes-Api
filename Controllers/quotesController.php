@@ -12,7 +12,7 @@ class QuotesController extends Database{
  * Select all data using the get method
  */
     public function index(){
-        $sql = "SELECT * FROM $this->table";
+    $sql = "SELECT quotes.*, users.name AS username FROM $this->table INNER JOIN users ON users.id = quotes.user_id";
         $stmt = $this->executeStatement($sql);
         $rows = $stmt->get_result();
         if($rows->num_rows <= 0) {
@@ -168,6 +168,28 @@ class QuotesController extends Database{
             ];
         }else{
             $data = [];
+            while($row = $rows->fetch_assoc()) {
+                $response[] = $row;
+            }
+        }
+        echo json_encode($response);
+    }
+
+    public function getQuotesByUserId($id) {
+        $id = $this->sanitizeInput($id['id']);
+        $sql = "SELECT quotes.*, users.name AS username FROM $this->table INNER JOIN users ON users.id = quotes.user_id WHERE users.id = ?";
+        $params = [
+            $id
+        ];
+        $stmt = $this->executeStatement($sql, $params);
+        $rows = $stmt->get_result();
+        if($rows->num_rows <= 0) {
+            $response = [
+                "status" => "error",
+                "message" => "no record exists in database"
+            ];
+        }else{
+            $response = [];
             while($row = $rows->fetch_assoc()) {
                 $response[] = $row;
             }
