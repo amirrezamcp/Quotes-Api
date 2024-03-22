@@ -183,7 +183,7 @@ class QuotesController extends Database{
         echo json_encode($response);
     }
 
-    public function getQuotesByUserId($id) {
+    public function getQuoteByUserId($id) {
         $id = $this->sanitizeInput($id['id']);
         $sql = "SELECT quotes.*, users.name AS username FROM $this->table INNER JOIN users ON users.id = quotes.user_id WHERE users.id = ?";
         $params = [

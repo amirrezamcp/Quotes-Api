@@ -1,26 +1,26 @@
 <?php
 use Controllers\RouteController;
 
-$routes = new RouteController();
+$route = new RouteController();
 
 // Home routes
-$routes->add('/', 'GET', 'Controllers\HomeController', 'home');
+$route->add('/', 'GET', 'Controllers\HomeController', 'home');
 
 // GET Quotes routes
-$routes->add('/quotes', 'GET', 'Controllers\QuotesController', 'index');
-$routes->add('/quotes/{id}', 'GET', 'Controllers\QuotesController', 'getQuotes');
+$route->add('/quotes', 'GET', 'Controllers\QuotesController', 'index');
+$route->add('/quotes/{id}', 'GET', 'Controllers\QuotesController', 'getQuotes');
 
 // POST Quotes routes
-$routes->add('/quotes', 'POST', 'Controllers\QuotesController', 'stores');
+$route->add('/quotes', 'POST', 'Controllers\QuotesController', 'stores');
 
 // PUT Quotes routes
-$routes->add('/quotes/{id}', 'PUT', 'Controllers\QuotesController', 'updateQuotes');
+$route->add('/quotes/{id}', 'PUT', 'Controllers\QuotesController', 'updateQuotes');
 
 // DELETE Quotes routes
-$routes->add('/quotes/{id}', 'DELETE', 'Controllers\QuotesController', 'deleteQuotes');
+$route->add('/quotes/{id}', 'DELETE', 'Controllers\QuotesController', 'deleteQuotes');
 
 // Filter by author
-$routes->add('/quotes/author/{author}', 'GET', 'Controllers\QuotesController', 'quotesByAuthor');
+$route->add('/quotes/author/{author}', 'GET', 'Controllers\QuotesController', 'quotesByAuthor');
 
 // Authentication using tokens
-$routes->add('/quotes/user/{id}', 'GET', 'Controllers\QuotesController', 'getQuotesByUserId');
+$route->add('/quotes/user/{id}', 'GET', 'Controllers\QuotesController', 'getQuoteByUserId');
