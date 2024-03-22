@@ -59,9 +59,17 @@ class QuotesController extends Database{
      * Inserting data using the post method
      */
     public function store() {
+
+        //  Get Token
+        $authController = new AuthController();
+        $token = $authController->getToken();
+
+        //  Get user id
+        $userControllers = new UserControllers();
+        $user_id = $userControllers->getIdByToken($token);
+
         $data = $this->sanitizeInput($_POST);
         if(array_key_exists('quote', $data) || array_key_exists('author', $data)) {
-            $user_id = 1;
             $sql = "INSERT INTO $this->table (user_id, quote, author) VALUES (?, ?, ?)";
             $params = [
                 $user_id,
