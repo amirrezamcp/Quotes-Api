@@ -8,27 +8,29 @@ class AuthController extends Database {
     public function validateToken() {
         $token = $this->getToken();
         if(is_null($token)) {
-            return null;
+            $this->unauthorizedUser();
+            die;
         }
         $sql = "SELECT id FROM users WHERE token = ?";
-        $paramse = [
+        $params = [
             $token
         ];
-        $stmt = $this->executeStatement($sql, $paramse);
+        $stmt = $this->executeStatement($sql, $params);
         $result = $stmt->get_result();
         $row = $result->fetch_assoc();
         if(is_null($row)) {
-            return false;
+            $this->unauthorizedUser();
+            die;
         }
         return true;
-
     }
+
     public function getToken() {
         $authHeader = $_SERVER['HTTP_AUTHORIZATION'] ?? null;
-        if(is_null($authHeader  )) {
+        if(is_null($authHeader)) {
             return null;
         }
-        if(!str_starts_with($authHeader, 'Bearer ')){
+        if(!str_starts_with($authHeader, 'Bearer ')) {
             return null;
         }
         $token = substr($authHeader, 7);

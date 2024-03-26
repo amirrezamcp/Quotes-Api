@@ -12,7 +12,7 @@ if($auth->validateToken()) {
     $requestMethod = htmlspecialchars($_SERVER['REQUEST_METHOD']);
 
     // load routes here
-    $routes->match($requestUrl, $requestMethod);
+    $route->match($requestUrl, $requestMethod);
 }else{
     $auth->unauthorizedUser();
 }

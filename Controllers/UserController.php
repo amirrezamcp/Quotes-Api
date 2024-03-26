@@ -5,10 +5,10 @@ use Database\Database;
 class UserControllers extends Database {
     public function getIdByToken($token) {
         $sql = "SELECT id FROM users WHERE token = ?";
-        $paramse = [
+        $params = [
             $token
         ];
-        $stmt = $this->executeStatement($sql, $paramse);
+        $stmt = $this->executeStatement($sql, $params);
         $result = $stmt->get_result();
         $row = $result->fetch_assoc();
         return $row['id'];
