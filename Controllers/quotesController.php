@@ -65,7 +65,7 @@ class QuotesController extends Database{
         $token = $authController->getToken();
 
         //  Get user id
-        $userControllers = new UserControllers();
+        $userControllers = new UserController();
         $user_id = $userControllers->getIdByToken($token);
 
         $data = $this->sanitizeInput($_POST);
@@ -136,6 +136,17 @@ class QuotesController extends Database{
      */
     public function deleteQuotes($id) {
         $id = $this->sanitizeInput($id['id']);
+        $user = new UserController();
+        $access = $user->hasAccess($id);
+        if(!$access) {
+            $response = [
+                'status' => '403 forbidden',
+                'message' => 'you dont have access to this record'
+            ];
+            http_response_code(403);
+            echo json_encode($response);
+            die();
+        }
         $sql = "DELETE FROM $this->table WHERE id =?";
         $params = [
             $id
