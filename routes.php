@@ -6,6 +6,9 @@ $route = new RouteController();
 // Home routes
 $route->add('/', 'GET', 'Controllers\HomeController', 'home');
 
+// register user
+$route->add('/register', 'POST', 'Controllers\UserController', 'register');
+
 // GET Quotes routes
 $route->auth()->add('/quotes', 'GET', 'Controllers\QuotesController', 'index');
 $route->auth()->add('/quotes/{id}', 'GET', 'Controllers\QuotesController', 'getQuotes');
