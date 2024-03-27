@@ -9,7 +9,12 @@ class RouteController {
      * @var array
      */
     private $routes = [];
+    private $authEnabled = false;
 
+    public function auth() {
+        $this->authEnabled = true;
+        return $this;
+    }
     /**
      * Add route and store in $routes array
      *
@@ -35,7 +40,8 @@ class RouteController {
             'urlPattern' => "#^$urlPattern$#",
             'method' => $method,
             'controller' => $controller,
-            'action' => $action
+            'action' => $action,
+            'auth' => $this->authEnabled
         ];
     }
 
@@ -67,6 +73,10 @@ class RouteController {
                     $controller = $route['controller'];
                     $action = $route['action'];
                     unset($matches[0]);
+                    if($route['auth']) {
+                        $authController = new AuthController();
+                        $authController->validateToken();
+                    }
                     $this->callControllerAction($controller, $action, $matches);
                     return true;
                 }
