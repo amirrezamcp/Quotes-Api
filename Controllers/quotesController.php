@@ -215,4 +215,19 @@ class QuotesController extends Database{
         }
         echo json_encode($response);
     }
+
+    public function getQuoteByLimmit($limit) {
+        $limit = $limit['limit'];
+        $sql = "SELECT * FROM $this->table ORDER BY RAND() LIMIT ?";
+        $params = [
+            $limit
+        ];
+        $stmt = $this->executeStatement($sql, $params);
+        $result = $stmt->get_result();
+        $response = [];
+        while($row = $result->fetch_assoc()) {
+            $response[] = $row;
+        }
+        echo json_encode($response);
+    }
 }

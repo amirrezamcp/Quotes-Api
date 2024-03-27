@@ -27,3 +27,6 @@ $route->auth()->add('/quotes/author/{author}', 'GET', 'Controllers\QuotesControl
 
 // Authentication using tokens
 $route->auth()->add('/quotes/user/{id}', 'GET', 'Controllers\QuotesController', 'getQuoteByUserId');
+
+// Get a random quote
+$route->auth()->add('/quotes/limit/{limit}', 'GET', 'Controllers\QuotesController', 'getQuoteByLimmit');
