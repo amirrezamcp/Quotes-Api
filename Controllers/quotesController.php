@@ -194,6 +194,11 @@ class QuotesController extends Database{
         echo json_encode($response);
     }
 
+    /**
+     * This function is used to retrieve quotes for a specific user based on the provided user ID.
+     *
+     * @param   [type]  $id  User ID to receive quotes
+     */
     public function getQuoteByUserId($id) {
         $id = $this->sanitizeInput($id['id']);
         $sql = "SELECT quotes.*, users.name AS username FROM $this->table INNER JOIN users ON users.id = quotes.user_id WHERE users.id = ?";
@@ -216,6 +221,12 @@ class QuotesController extends Database{
         echo json_encode($response);
     }
 
+    /**
+     * This function is used to get a specified number of random quotes from the data table.
+     *
+     * @param   [type]  $limit  Its value is determined by the user. This value is then used to limit
+     *                  the number of SQL query results to return the specified number of records.
+     */
     public function getQuoteByLimmit($limit) {
         $limit = $limit['limit'];
         $sql = "SELECT * FROM $this->table ORDER BY RAND() LIMIT ?";

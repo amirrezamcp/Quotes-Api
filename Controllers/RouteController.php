@@ -3,6 +3,7 @@ namespace Controllers;
 use Traits\SanitizerTrait;
 class RouteController {
     use SanitizerTrait;
+    
     /**
      * It is an array to store route information.
      *
@@ -15,6 +16,7 @@ class RouteController {
         $this->authEnabled = true;
         return $this;
     }
+
     /**
      * Add route and store in $routes array
      *

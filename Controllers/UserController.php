@@ -3,6 +3,20 @@ namespace Controllers;
 use Database\Database;
 
 class UserController extends Database {
+
+    /**
+     * By receiving a token as input, this function retrieves the user ID 
+     *      associated with this token from the users table in the database.
+     *      First, a SQL query is created to select the user ID with the token.
+     *      Then, using the executeStatement function, this query is executed
+     *      and the result obtained is saved in a statement.
+     *      Then, from the finalized result, the first row (the only row) is retrieved using
+     *      fetch_assoc and the corresponding user ID is returned.
+     *
+     * @param   string  $token  user token
+     *
+     * @return  int          id of the user
+     */
     public function getIdByToken($token) {
         $sql = "SELECT id FROM users WHERE token = ?";
         $params = [
@@ -14,8 +28,15 @@ class UserController extends Database {
         return $row['id'];
     }
     
+    /**
+     * This function checks if the user whose token submitted the request
+     *      has access to a particular quote based on real authentication
+     *
+     * @param   [type]  $quote_id  Indicates the quote ID we want to check if the current user has access to.
+     *
+     * @return  [type]             if $row is null == false else $row is not null == true
+     */
     public function hasAccess($quote_id) {
-
         $authController = new AuthController();
         $token = $authController->getToken();
         $user_id = $this->getIdByToken($token);
@@ -34,6 +55,9 @@ class UserController extends Database {
         }
     }
 
+    /**
+     * This function is used in the user registration process for the system
+     */
     public function register() {
         if(!array_key_exists('email', $_POST)) {
             $response = [
